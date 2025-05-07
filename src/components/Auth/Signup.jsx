@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { createUserWithEmailAndPassword } from 'firebase/auth';
-import { auth } from '../../firebase';
+import { auth, db } from '../../firebase';
+import { setDoc, doc, serverTimestamp } from 'firebase/firestore';
 import { useNavigate } from 'react-router-dom';
 import { EnvelopeIcon, LockClosedIcon, UserIcon } from '@heroicons/react/24/outline';
 
@@ -23,16 +24,29 @@ const Signup = () => {
     setLoading(true);
     setError('');
     
-    try {
-      await createUserWithEmailAndPassword(auth, email, password);
-      navigate('/dashboard');
-    } catch (err) {
-      setError(err.message);
-    } finally {
+    // In the handleSubmit function of Signup.jsx
+try {
+  const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+  
+  // Update user profile with display name
+  await updateProfile(userCredential.user, {
+    displayName: name
+  });
+
+  // Create user profile in Firestore
+  await setDoc(doc(db, 'users', userCredential.user.uid), {
+    name,
+    email,
+    createdAt: serverTimestamp(),
+    lastUpdated: serverTimestamp()
+  });
+  navigate('/dashboard');
+} catch (err) {
+  setError(err.message);
+} finally {
       setLoading(false);
     }
   };
-
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-50 py-12 px-4 sm:px-6 lg:px-8">
       <div className="max-w-md w-full space-y-8">

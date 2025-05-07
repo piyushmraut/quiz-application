@@ -88,6 +88,7 @@
 // export default QuizList;
 
 // src/components/Quiz/QuizList.jsx
+
 import { useState, useEffect } from "react";
 import { collection, query, where, getDocs } from "firebase/firestore";
 import { db, auth } from "../../firebase";
