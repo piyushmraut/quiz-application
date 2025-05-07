@@ -4,12 +4,14 @@ import { useAuthState } from "react-firebase-hooks/auth";
 import { ArrowLeftOnRectangleIcon, UserCircleIcon } from "@heroicons/react/24/outline";
 import { useEffect, useState } from "react";
 import { doc, getDoc } from "firebase/firestore";
+import { useAuth } from '../context/AuthContext';
 
 const Navbar = () => {
   const [user] = useAuthState(auth);
-  const [userData, setUserData] = useState(null);
+  // const [userData, setUserData] = useState(null);
+  // const navigate = useNavigate();
+  const { currentUser, userData, isAdmin } = useAuth();
   const navigate = useNavigate();
-
   useEffect(() => {
     const fetchUserData = async () => {
       if (user) {
@@ -52,7 +54,7 @@ const Navbar = () => {
                 QuizApp
               </Link>
             </div>
-            {user && (
+            {/* {user && (
               <div className="hidden sm:ml-6 sm:flex sm:space-x-8">
                 <Link
                   to="/dashboard"
@@ -79,7 +81,37 @@ const Navbar = () => {
                   Quizzes
                 </Link>
               </div>
-            )}
+            )} */}
+            {user && (
+        <div className="hidden sm:ml-6 sm:flex sm:space-x-8">
+          <Link
+            to="/dashboard"
+            className="border-indigo-500 text-gray-900 inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium"
+          >
+            Dashboard
+          </Link>
+          <Link
+            to="/leaderboard"
+            className="border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700 inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium"
+          >
+            Leaderboard
+          </Link>
+          {isAdmin && (
+            <Link
+              to="/create-quiz"
+              className="border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700 inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium"
+            >
+              Create Quiz
+            </Link>
+          )}
+          <Link
+            to="/quizzes"
+            className="border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700 inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium"
+          >
+            Quizzes
+          </Link>
+        </div>
+      )}
           </div>
           {user && (
             <div className="hidden sm:ml-6 sm:flex sm:items-center">

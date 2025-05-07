@@ -33,7 +33,7 @@ function App() {
               <Route
                 path="/create-quiz"
                 element={
-                  <PrivateRoute>
+                  <PrivateRoute adminOnly>
                     <CreateQuiz />
                   </PrivateRoute>
                 }
@@ -41,7 +41,7 @@ function App() {
               <Route
                 path="/edit-quiz/:quizId"
                 element={
-                  <PrivateRoute>
+                  <PrivateRoute adminOnly>
                     <CreateQuiz />
                   </PrivateRoute>
                 }

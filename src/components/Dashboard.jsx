@@ -9,8 +9,10 @@ import {
   TrophyIcon,
   UserIcon,
 } from '@heroicons/react/24/outline';
+import { useAuth } from '../context/AuthContext';
 
 const Dashboard = () => {
+  const { isAdmin } = useAuth();
   const [userQuizzes, setUserQuizzes] = useState([]);
   const [userResults, setUserResults] = useState([]);
   const [recentQuizzes, setRecentQuizzes] = useState([]);
@@ -119,17 +121,18 @@ const Dashboard = () => {
       <h1 className="text-2xl font-bold text-gray-900 mb-8">Dashboard</h1>
 
       <div className="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
-        <div className="bg-white shadow rounded-lg p-6">
+        {isAdmin && <div className="bg-white shadow rounded-lg p-6">
           <div className="flex items-center">
             <div className="p-3 rounded-full bg-indigo-100 text-indigo-600">
               <DocumentTextIcon className="h-6 w-6" />
             </div>
+            
             <div className="ml-4">
               <h3 className="text-sm font-medium text-gray-500">Quizzes Created</h3>
               <p className="text-2xl font-semibold text-gray-900">{userStats.totalCreated}</p>
             </div>
           </div>
-        </div>
+        </div>}
         <div className="bg-white shadow rounded-lg p-6">
           <div className="flex items-center">
             <div className="p-3 rounded-full bg-green-100 text-green-600">
@@ -166,7 +169,7 @@ const Dashboard = () => {
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-        <div className="bg-white shadow rounded-lg overflow-hidden lg:col-span-2">
+        {isAdmin && <div className="bg-white shadow rounded-lg overflow-hidden lg:col-span-2">
           <div className="p-6 border-b border-gray-200">
             <h2 className="text-lg font-medium text-gray-900">Your Quizzes</h2>
           </div>
@@ -214,7 +217,7 @@ const Dashboard = () => {
               ))}
             </ul>
           )}
-          <div className="p-4 border-t border-gray-200 flex justify-between">
+          {/* <div className="p-4 border-t border-gray-200 flex justify-between">
             <Link
               to="/create-quiz"
               className="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
@@ -229,8 +232,26 @@ const Dashboard = () => {
                 View All
               </Link>
             )}
-          </div>
-        </div>
+          </div> */}
+          <div className="p-4 border-t border-gray-200 flex justify-between">
+        {isAdmin && (
+          <Link
+            to="/create-quiz"
+            className="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+          >
+            Create New Quiz
+          </Link>
+        )}
+        {userQuizzes.length > 0 && (
+          <Link
+            to="/quizzes"
+            className="inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md shadow-sm text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+          >
+            View All
+          </Link>
+        )}
+      </div>
+        </div>}
 
         <div className="space-y-6">
           <div className="bg-white shadow rounded-lg overflow-hidden">

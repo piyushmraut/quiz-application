@@ -9,8 +9,10 @@ import {
   DocumentTextIcon,
   PencilIcon,
 } from "@heroicons/react/24/outline";
+import { useAuth } from "../../context/AuthContext";
 
 const QuizList = () => {
+  const { isAdmin } = useAuth();
   const [quizzes, setQuizzes] = useState([]);
   const [loading, setLoading] = useState(true);
   const [searchTerm, setSearchTerm] = useState("");
@@ -59,12 +61,14 @@ const QuizList = () => {
               className="w-full px-4 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
             />
           </div>
-          <Link
-            to="/create-quiz"
-            className="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
-          >
-            Create Quiz
-          </Link>
+          {isAdmin && (
+            <Link
+              to="/create-quiz"
+              className="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+            >
+              Create Quiz
+            </Link>
+          )}
         </div>
       </div>
 
