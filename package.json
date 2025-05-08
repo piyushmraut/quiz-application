@@ -13,9 +13,12 @@
     "@heroicons/react": "^2.2.0",
     "axios": "^1.9.0",
     "firebase": "^11.6.1",
+    "framer-motion": "^12.10.0",
+    "lucide-react": "^0.507.0",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
     "react-firebase-hooks": "^5.1.1",
+    "react-lottie": "^1.2.10",
     "react-router-dom": "^7.5.3"
   },
   "devDependencies": {
